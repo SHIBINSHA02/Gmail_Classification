@@ -5,8 +5,9 @@ require('dotenv').config();
 
 // Initialize Gemini
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+// geminiClassifier.js - NEW, CORRECTED CODE
 
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 async function classifyEmailWithGemini(emailContent, availableLabels) {
     if (!emailContent || !emailContent.body) {
         return "NONE";
