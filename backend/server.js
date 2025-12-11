@@ -1,14 +1,15 @@
 // backend/server.js
+
 // server.js
+require('dotenv').config(); // <-- MOVED TO TOP to ensure API_KEY is loaded for geminiClassifier
 const express = require('express');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { google } = require('googleapis');
-const session = require('express-session'); // <-- USE express-session
+const session = require('express-session');
 // const cookieSession = require('cookie-session'); // <-- REMOVE cookie-session
 const cors = require('cors');
 const { classifyEmailWithGemini } = require('./geminiClassifier');
-require('dotenv').config();
 
 const app = express();
 
@@ -110,7 +111,7 @@ app.post('/api/classify', isLoggedIn, async (req, res) => {
         }
         const messagesResponse = await gmail.users.messages.list({
             userId: 'me',
-            q: 'in:inbox -category:{promotions,social,updates,forums} is:unread',
+            q: 'in:inbox',
             maxResults: 20,
         });
         const messages = messagesResponse.data.messages || [];
